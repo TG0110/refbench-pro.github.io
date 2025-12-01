@@ -103,21 +103,117 @@
             color: #666;
             vertical-align: super;
         }
+/* --- 新增的 Badge 按钮样式 --- */
+.badge-button {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        border-radius: 4px;
+        margin: 0 5px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        font-weight: bold;
+        transition: opacity 0.2s;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    
+    .badge-button:hover {
+        opacity: 0.8;
+        transform: translateY(-1px);
+    }
+
+    /* 左侧 Label 部分 */
+    .badge-label {
+        background-color: #555; /* 深灰色背景 */
+        color: #fff;
+        padding: 6px 10px;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        text-transform: uppercase;
+    }
+
+    /* 右侧 Value 部分 (用于 Arxiv 这种双色结构，或者单色按钮) */
+    .badge-value {
+        padding: 6px 10px;
+        color: #fff;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
+
+    /* 颜色定义 */
+    .bg-black { background-color: #000; }     /* Github 黑色 */
+    .bg-red { background-color: #B31B1B; }    /* Arxiv 红色 */
+    .bg-blue { background-color: #007EC6; }   /* Dataset 蓝色 */
+    
+    /* 标题区域微调 */
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    .logo-img {
+        width: 50px; /* 根据你的 Logo 图片大小调整 */
+        height: 50px;
+        margin-right: 15px;
+        object-fit: contain;
+    }
     </style>
 </head>
 <body>
 
     <!-- 标题区域 -->
+    <!-- 顶部 Header -->
     <section class="hero">
         <div class="hero-body">
-            <div class="container has-text-centered">
-                <h1 class="title is-2">
-                    Visual Grounding & Reasoning Leaderboard
+        <div class="container is-max-desktop has-text-centered">
+            
+            <!-- 1. 标题与图标行 -->
+            <div class="logo-container">
+                <!-- 
+                注意：这里暂时用了一个机器人图标代替你的 Logo。
+                如果你有图片文件(比如 logo.png)，请把下面这行 <span>...</span> 删掉，
+                换成：<img src="logo.png" class="logo-img" alt="Logo"> 
+                -->
+                <span class="icon is-large" style="font-size: 3rem; margin-right: 15px; color: #2c3e50;">
+                    <i class="fas fa-robot"></i> 
+                </span>
+
+                <h1 class="title is-1 publication-title" style="margin-bottom: 0;">
+                RefBench-PRO Leaderboard 🏆
                 </h1>
-                <p class="subtitle is-5">
-                    Comparison of MLLMs on Perception and Reasoning Tasks
-                </p>
             </div>
+
+            <!-- 2. Badge 风格按钮行 -->
+            <div style="margin-bottom: 20px;">
+                <!-- Github 按钮 (黑色) -->
+                <a href="https://github.com/xxx" target="_blank" class="badge-button">
+                    <span class="badge-label bg-black" style="border-radius: 4px;">
+                        <i class="fab fa-github" style="margin-right:4px;"></i> GITHUB
+                    </span>
+                </a>
+
+                <!-- Arxiv 按钮 (模仿截图: 左灰右红) -->
+                <a href="https://arxiv.org/xxx" target="_blank" class="badge-button">
+                    <span class="badge-label">ARXIV</span>
+                    <span class="badge-value bg-red">PAPER</span>
+                </a>
+
+                <!-- Dataset 按钮 (蓝色)
+                <a href="https://xxxx" target="_blank" class="badge-button">
+                    <span class="badge-value bg-blue" style="border-radius: 4px;">
+                        <i class="fas fa-database" style="margin-right:4px;"></i> DATASET
+                    </span>
+                </a> -->
+            </div>
+
+            <!-- 3. 副标题说明文字 -->
+            <p class="subtitle is-5 has-text-grey-dark">
+                A Holistic Benchmark for Visual-clue Perception and Compositional Reasoning in Referring Expression Comprehension.
+            </p>
+
+        </div>
         </div>
     </section>
 
@@ -132,7 +228,7 @@
                             <th rowspan="2" onclick="sortTable(0)">Models</th>
                             <th rowspan="2" onclick="sortTable(1)">Size</th>
                             <th colspan="2">Overall</th>
-                            <th colspan="4">Visual-cue Perception</th>
+                            <th colspan="4">Visual-clue Perception</th>
                             <th colspan="4">Compositional Reasoning</th>
                         </tr>
                         <!-- 第二行表头 -->
@@ -513,12 +609,75 @@
                     </tbody>
                 </table>
             </div>
-            <p class="is-size-7 has-text-grey has-text-centered">
+            <!-- <p class="is-size-7 has-text-grey has-text-centered">
                 * Note: .
-            </p>
+            </p> -->
         </div>
     </section>
+    <!-- 页脚信息区域 (Notes, Tasks, Citation) -->
+    <section class="section">
+        <div class="container is-max-desktop content">
+        
+        <!-- 1. Notes 部分 -->
+        <h3 class="title is-4 has-text-centered">
+            📝 Notes
+        </h3>
+        <div style="margin-bottom: 30px;">
+            <ul>
+                <li>
+                    🏆 <b>Bold</b> indicates the best result, and <span style="text-decoration: underline;">underline</span> indicates the second best.
+                </li>
+                <li>
+                    📊 <b>Acc<sub>p</sub></b> denotes the accuracy for non-rejection tasks, while <b>Acc<sub>o</sub></b> represents the overall accuracy.
+                </li>
+                <li>
+                    ⚙️ Models are evaluated using the official codebase settings provided in the paper.
+                </li>
+                <li>
+                    Unknown or N/A values are marked with "-".
+                </li>
+            </ul>
+        </div>
 
+        <!-- 2. 可折叠列表 (模仿 List of Software，改为 Task Definitions) -->
+        <!-- 使用 <details> 标签实现点击展开效果 -->
+        <div style="margin-bottom: 30px; text-align: center;">
+            <details>
+                <summary style="cursor: pointer; font-size: 1.2rem; font-weight: bold; list-style: none;">
+                     📂 Task Definitions of RefBench-PRO
+                </summary>
+                <div style="text-align: left; margin-top: 15px; padding: 15px; background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                    <p><strong>Visual-clue Perception:</strong></p>
+                    <ul>
+                        <li><b>Attribute:</b> Intrinsic visual properties (color, shape, material).</li>
+                        <li><b>Position:</b> Spatial relationships between objects.</li>
+                        <li><b>Interaction:</b> Relative relationships among objects of the same category.</li>
+                    </ul>
+                    <p><strong>Compositional Reasoning:</strong></p>
+                    <ul>
+                        <li><b>Relation:</b> Compositional referring requiring multi-object analysis.</li>
+                        <li><b>Commonsense:</b> Identification via contextual or functional descriptions.</li>
+                        <li><b>Reject:</b> Handling non-existent target references.</li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+
+        <!-- 3. Citation 部分 -->
+        <h3 class="title is-4 has-text-centered">
+            📜 Citation
+        </h3>
+        <div style="text-align: center; margin-bottom: 20px;">
+            If you find our work useful for your research, please consider citing:
+        </div>
+        
+        <!-- BibTeX 代码块 -->
+        <div style="background-color: #f6f8fa; padding: 20px; border-radius: 10px; border: 1px solid #d0d7de; font-family: monospace; text-align: left; overflow-x: auto;">
+    
+        </div>
+
+        </div>
+    </section>
     <!-- 简单的 JS 排序逻辑 -->
     <script>
         function sortTable(n) {
