@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmark Leaderboard</title>
+    <!-- 引入 Google Fonts (学术风格字体) -->
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <!-- 引入 Bulma CSS 框架 (用于布局) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <!-- 引入 Font Awesome (图标) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Google Sans', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .hero-body {
+            padding-bottom: 1rem;
+        }
+
+        .container {
+            max-width: 1400px; /* 让表格更宽 */
+        }
+
+        .title {
+            font-weight: 800;
+        }
+
+        /* 表格容器，处理溢出滚动 */
+        .table-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 40px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: #ffffff;
+            border-bottom: 2px solid #dbdbdb;
+            vertical-align: middle !important;
+            text-align: center !important;
+            padding: 12px 8px;
+            cursor: pointer; /* 鼠标悬停显示手型 */
+        }
+        
+        th:hover {
+            background-color: #f0f0f0;
+        }
+
+        td {
+            border-bottom: 1px solid #eee;
+            padding: 8px 5px;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        /* 第一列（模型名）左对齐 */
+        td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: #363636;
+        }
+
+        /* 分类标题行样式 */
+        .category-row td {
+            font-weight: 800;
+            text-align: center !important;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* 颜色定义 (复刻截图) */
+        .bg-pink { background-color: #ffeef2; color: #a02010; }
+        .bg-green { background-color: #e6f9ed; color: #0f5132; }
+        .bg-purple { background-color: #f2f2ff; color: #303f9f; }
+        .bg-yellow { background-color: #fffff0; color: #9a6e00; }
+
+        /* 高亮样式 */
+        .best {
+            font-weight: 800;
+            color: #000;
+        }
+        .second {
+            text-decoration: underline;
+            color: #333;
+        }
+
+        /* 上标引用样式 */
+        .cite {
+            font-size: 0.7em;
+            color: #666;
+            vertical-align: super;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 标题区域 -->
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="title is-2">
+                    Visual Grounding & Reasoning Leaderboard
+                </h1>
+                <p class="subtitle is-5">
+                    Comparison of MLLMs on Perception and Reasoning Tasks
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 表格区域 -->
+    <section class="section">
+        <div class="container">
+            <div class="table-container">
+                <table class="table is-hoverable is-fullwidth" id="leaderboardTable">
+                    <thead>
+                        <!-- 第一行表头 -->
+                        <tr>
+                            <th rowspan="2" onclick="sortTable(0)">Models</th>
+                            <th rowspan="2" onclick="sortTable(1)">Size</th>
+                            <th colspan="2">Overall</th>
+                            <th colspan="4">Visual-cue Perception</th>
+                            <th colspan="4">Compositional Reasoning</th>
+                        </tr>
+                        <!-- 第二行表头 -->
+                        <tr>
+                            <!-- Overall -->
+                            <th onclick="sortTable(2)">Acc<sub>p</sub></th>
+                            <th onclick="sortTable(3)">Acc<sub>o</sub></th>
+                            <!-- Visual-cue -->
+                            <th onclick="sortTable(4)">Attribute</th>
+                            <th onclick="sortTable(5)">Position</th>
+                            <th onclick="sortTable(6)">Interaction</th>
+                            <th onclick="sortTable(7)">Acc<sub>API</sub></th>
+                            <!-- Reasoning -->
+                            <th onclick="sortTable(8)">Relation</th>
+                            <th onclick="sortTable(9)">Commonsense</th>
+                            <th onclick="sortTable(10)">Reject</th>
+                            <th onclick="sortTable(11)">Acc<sub>RC</sub></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 1. Open-vocabulary Grounding Models (PINK) -->
+                        <tr class="category-row bg-pink">
+                            <td colspan="12">Open-vocabulary Grounding Models</td>
+                        </tr>
+                        <tr>
+                            <td>GLEE <span class="cite">[40]</span></td>
+                            <td>-</td>
+                            <td>36.1</td>
+                            <td>31.2</td>
+                            <td>48.2</td>
+                            <td>38.4</td>
+                            <td>34.5</td>
+                            <td>40.4</td>
+                            <td>31.4</td>
+                            <td>27.9</td>
+                            <td>7.1</td>
+                            <td>29.7</td>
+                        </tr>
+                        <tr>
+                            <td>Grounding DINO L <span class="cite">[21]</span></td>
+                            <td>-</td>
+                            <td>37.6</td>
+                            <td>31.3</td>
+                            <td>47.5</td>
+                            <td>43.3</td>
+                            <td>31.8</td>
+                            <td>40.9</td>
+                            <td>35.0</td>
+                            <td>30.3</td>
+                            <td>0.1</td>
+                            <td>32.7</td>
+                        </tr>
+
+                        <!-- 2. Proprietary MLLMs (GREEN) -->
+                        <tr class="category-row bg-green">
+                            <td colspan="12">Proprietary MLLMs</td>
+                        </tr>
+                        <tr>
+                            <td>Gemini-2.5-pro <span class="cite">[7]</span></td>
+                            <td>-</td>
+                            <td>9.6</td>
+                            <td>8.0</td>
+                            <td>10.4</td>
+                            <td>11.5</td>
+                            <td>10.8</td>
+                            <td>10.9</td>
+                            <td>7.2</td>
+                            <td>8.2</td>
+                            <td>-</td>
+                            <td>7.7</td>
+                        </tr>
+                        <tr>
+                            <td>GPT-4o <span class="cite">[10]</span></td>
+                            <td>-</td>
+                            <td>12.1</td>
+                            <td>10.1</td>
+                            <td>11.7</td>
+                            <td>12.8</td>
+                            <td>11.9</td>
+                            <td>12.1</td>
+                            <td>12.4</td>
+                            <td>11.6</td>
+                            <td>-</td>
+                            <td>12.0</td>
+                        </tr>
+                        <tr>
+                            <td>GPT-5 <span class="cite">[30]</span></td>
+                            <td>-</td>
+                            <td>26.1</td>
+                            <td>21.8</td>
+                            <td>29.2</td>
+                            <td>25.5</td>
+                            <td>27.0</td>
+                            <td>27.2</td>
+                            <td>26.2</td>
+                            <td>22.9</td>
+                            <td>-</td>
+                            <td>24.6</td>
+                        </tr>
+
+                        <!-- 3. Specialist MLLMs (PURPLE) -->
+                        <tr class="category-row bg-purple">
+                            <td colspan="12">Specialist MLLMs</td>
+                        </tr>
+                        <tr>
+                            <td>PaDT <span class="cite">[35]</span></td>
+                            <td>3B</td>
+                            <td>26.6</td>
+                            <td>22.2</td>
+                            <td>30.4</td>
+                            <td>28.0</td>
+                            <td>30.4</td>
+                            <td>29.6</td>
+                            <td>23.7</td>
+                            <td>20.8</td>
+                            <td>-</td>
+                            <td>22.3</td>
+                        </tr>
+                        <tr>
+                            <td>VLM-R1 <span class="cite">[34]</span></td>
+                            <td>3B</td>
+                            <td>54.4</td>
+                            <td>45.3</td>
+                            <td>59.0</td>
+                            <td>58.0</td>
+                            <td>54.1</td>
+                            <td>57.0</td>
+                            <td>47.8</td>
+                            <td>53.2</td>
+                            <td>-</td>
+                            <td>50.5</td>
+                        </tr>
+                        <tr>
+                            <td>ChatRex <span class="cite">[11]</span></td>
+                            <td>7B</td>
+                            <td>49.5</td>
+                            <td>41.3</td>
+                            <td>54.7</td>
+                            <td>51.1</td>
+                            <td>53.2</td>
+                            <td>53.0</td>
+                            <td>45.1</td>
+                            <td>43.4</td>
+                            <td>-</td>
+                            <td>44.2</td>
+                        </tr>
+                        <tr>
+                            <td>Migician <span class="cite">[16]</span></td>
+                            <td>7B</td>
+                            <td>52.3</td>
+                            <td>43.6</td>
+                            <td>57.3</td>
+                            <td>59.7</td>
+                            <td>52.8</td>
+                            <td>56.6</td>
+                            <td>45.4</td>
+                            <td>46.1</td>
+                            <td>-</td>
+                            <td>45.7</td>
+                        </tr>
+                        <tr>
+                            <td>UniVG-R1 <span class="cite">[4]</span></td>
+                            <td>7B</td>
+                            <td>53.0</td>
+                            <td>44.2</td>
+                            <td>59.4</td>
+                            <td>57.2</td>
+                            <td>55.1</td>
+                            <td>57.2</td>
+                            <td>48.3</td>
+                            <td>44.9</td>
+                            <td>-</td>
+                            <td>46.6</td>
+                        </tr>
+                        <tr>
+                            <td>Rex-Thinker <span class="cite">[12]</span></td>
+                            <td>7B</td>
+                            <td>63.6</td>
+                            <td>53.0</td>
+                            <td>67.1</td>
+                            <td>64.5</td>
+                            <td>61.7</td>
+                            <td>64.4</td>
+                            <td>59.3</td>
+                            <td>65.6</td>
+                            <td>-</td>
+                            <td>62.4</td>
+                        </tr>
+                        <tr>
+                            <td>CogVLM-Grounding <span class="cite">[38]</span></td>
+                            <td>17B</td>
+                            <td>57.1</td>
+                            <td>47.5</td>
+                            <td>62.4</td>
+                            <td>62.4</td>
+                            <td>55.9</td>
+                            <td>60.2</td>
+                            <td>49.4</td>
+                            <td>55.2</td>
+                            <td>-</td>
+                            <td>52.3</td>
+                        </tr>
+
+                        <!-- 4. Open-source General MLLMs (YELLOW) -->
+                        <tr class="category-row bg-yellow">
+                            <td colspan="12">Open-source General MLLMs</td>
+                        </tr>
+                        <tr>
+                            <td>Qwen2-VL <span class="cite">[37]</span></td>
+                            <td>7B</td>
+                            <td>45.4</td>
+                            <td>42.6</td>
+                            <td>55.3</td>
+                            <td>47.8</td>
+                            <td>37.8</td>
+                            <td>47.0</td>
+                            <td>39.4</td>
+                            <td>46.5</td>
+                            <td class="best">28.5</td>
+                            <td>43.0</td>
+                        </tr>
+                        <tr>
+                            <td>Mimo-VL-RL <span class="cite">[42]</span></td>
+                            <td>7B</td>
+                            <td>56.3</td>
+                            <td>46.9</td>
+                            <td>60.9</td>
+                            <td>58.4</td>
+                            <td>57.3</td>
+                            <td>58.9</td>
+                            <td>51.8</td>
+                            <td>52.9</td>
+                            <td>0.1</td>
+                            <td>52.4</td>
+                        </tr>
+                        <tr>
+                            <td>Qwen2.5-VL <span class="cite">[3]</span></td>
+                            <td>7B</td>
+                            <td>57.6</td>
+                            <td>48.5</td>
+                            <td>61.7</td>
+                            <td>63.0</td>
+                            <td>58.6</td>
+                            <td>61.1</td>
+                            <td>49.1</td>
+                            <td>55.6</td>
+                            <td>3.1</td>
+                            <td>52.3</td>
+                        </tr>
+                        <tr>
+                            <td>InternVL3 <span class="cite">[51]</span></td>
+                            <td>8B</td>
+                            <td>20.1</td>
+                            <td>20.3</td>
+                            <td>24.9</td>
+                            <td>18.4</td>
+                            <td>22.3</td>
+                            <td>21.9</td>
+                            <td>19.8</td>
+                            <td>15.0</td>
+                            <td>21.3</td>
+                            <td>17.4</td>
+                        </tr>
+                        <tr>
+                            <td>InternVL3.5 <span class="cite">[39]</span></td>
+                            <td>8B</td>
+                            <td>41.5</td>
+                            <td>34.6</td>
+                            <td>45.7</td>
+                            <td>41.2</td>
+                            <td>45.3</td>
+                            <td>44.1</td>
+                            <td>37.8</td>
+                            <td>37.3</td>
+                            <td>-</td>
+                            <td>37.5</td>
+                        </tr>
+                        <tr>
+                            <td>LLaVA-OneVision-1.5 <span class="cite">[2]</span></td>
+                            <td>8B</td>
+                            <td>50.7</td>
+                            <td>42.3</td>
+                            <td>54.5</td>
+                            <td>54.0</td>
+                            <td>48.4</td>
+                            <td>52.3</td>
+                            <td>48.1</td>
+                            <td>48.6</td>
+                            <td>-</td>
+                            <td>48.3</td>
+                        </tr>
+                        <!-- Best Overall Model -->
+                        <tr>
+                            <td>Qwen3-VL</td>
+                            <td>8B</td>
+                            <td class="best">71.4</td>
+                            <td class="best">62.2</td>
+                            <td class="best">76.6</td>
+                            <td class="best">76.1</td>
+                            <td class="second">67.3</td>
+                            <td class="best">73.3</td>
+                            <td class="best">68.9</td>
+                            <td class="best">68.3</td>
+                            <td>15.8</td>
+                            <td class="best">68.6</td>
+                        </tr>
+                        <tr>
+                            <td>Ovis2.5 <span class="cite">[24]</span></td>
+                            <td>9B</td>
+                            <td>61.7</td>
+                            <td>51.5</td>
+                            <td>65.7</td>
+                            <td>63.6</td>
+                            <td>59.7</td>
+                            <td>63.0</td>
+                            <td>58.7</td>
+                            <td>61.0</td>
+                            <td>-</td>
+                            <td>59.9</td>
+                        </tr>
+                        <tr>
+                            <td>GLM-4.1V-Base <span class="cite">[36]</span></td>
+                            <td>9B</td>
+                            <td>60.1</td>
+                            <td>50.1</td>
+                            <td>62.9</td>
+                            <td>61.0</td>
+                            <td>57.7</td>
+                            <td>60.5</td>
+                            <td>57.0</td>
+                            <td>61.9</td>
+                            <td>-</td>
+                            <td>59.4</td>
+                        </tr>
+                        <tr>
+                            <td>LLaVA-OneVision <span class="cite">[15]</span></td>
+                            <td>72B</td>
+                            <td>56.5</td>
+                            <td>47.1</td>
+                            <td>60.1</td>
+                            <td>59.4</td>
+                            <td>53.7</td>
+                            <td>57.7</td>
+                            <td>54.2</td>
+                            <td>55.0</td>
+                            <td>-</td>
+                            <td>54.6</td>
+                        </tr>
+                        <!-- Second Best -->
+                        <tr>
+                            <td>Qwen2.5-VL <span class="cite">[3]</span></td>
+                            <td>72B</td>
+                            <td class="second">66.7</td>
+                            <td class="second">59.5</td>
+                            <td class="second">68.6</td>
+                            <td class="second">69.1</td>
+                            <td class="best">69.4</td>
+                            <td class="second">69.1</td>
+                            <td class="second">61.6</td>
+                            <td class="second">64.8</td>
+                            <td class="second">23.6</td>
+                            <td class="second">63.2</td>
+                        </tr>
+                        <tr>
+                            <td>InternVL3 <span class="cite">[51]</span></td>
+                            <td>78B</td>
+                            <td>21.8</td>
+                            <td>22.3</td>
+                            <td>35.0</td>
+                            <td>24.9</td>
+                            <td>28.2</td>
+                            <td>29.4</td>
+                            <td>24.3</td>
+                            <td>20.8</td>
+                            <td>24.8</td>
+                            <td>22.5</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="is-size-7 has-text-grey has-text-centered">
+                * Note: Data extracted from the provided screenshot. Bold indicates the best result, Underline indicates the second best.
+            </p>
+        </div>
+    </section>
+
+    <!-- 简单的 JS 排序逻辑 -->
+    <script>
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("leaderboardTable");
+            switching= true;
+            // 设置默认排序方向为降序 (通常排行榜看高分)
+            dir = "desc"; 
+            
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                
+                // 从第2行开始循环（跳过两行表头）
+                for (i = 2; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    
+                    // 获取当前行和下一行的待比较单元格
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+
+                    // 安全检查：如果遇到分类标题行（只有1列），跳过比较，避免报错
+                    if (!x || !y) continue;
+
+                    // 提取内容并去除 HTML 标签（如 <b>, <u>, <sub>）
+                    var xContent = x.innerText || x.textContent;
+                    var yContent = y.innerText || y.textContent;
+                    
+                    // 处理数值：将 "-" 视为 -1，确保排在最后
+                    var xNum = parseFloat(xContent === "-" ? -1 : xContent);
+                    var yNum = parseFloat(yContent === "-" ? -1 : yContent);
+                    
+                    // 判断是比较数值还是字符串
+                    var isNumeric = !isNaN(xNum) && !isNaN(yNum);
+
+                    if (dir == "asc") {
+                        if (isNumeric) {
+                            if (xNum > yNum) { shouldSwitch = true; break; }
+                        } else {
+                            if (xContent.toLowerCase() > yContent.toLowerCase()) { shouldSwitch = true; break; }
+                        }
+                    } else if (dir == "desc") {
+                        if (isNumeric) {
+                            if (xNum < yNum) { shouldSwitch = true; break; }
+                        } else {
+                            if (xContent.toLowerCase() < yContent.toLowerCase()) { shouldSwitch = true; break; }
+                        }
+                    }
+                }
+                
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount++;      
+                } else {
+                    // 如果第一次遍历没发生交换且是降序，则改为升序再试一次
+                    if (switchcount == 0 && dir == "desc") {
+                        dir = "asc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
