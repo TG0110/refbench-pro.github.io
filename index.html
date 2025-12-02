@@ -13,28 +13,19 @@
 
     <style>
         body {
-            font-family: 'Google Sans', sans-serif;
-            background-color: #f5f5f5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; /* 仿图3字体 */
+            background-color: #ffffff; /* 整体背景改为纯白 */
+            color: #333;
         }
 
-        .hero-body {
-            padding-bottom: 1rem;
-        }
+        .hero-body { padding-bottom: 1rem; }
+        .container { max-width: 1400px; }
 
-        .container {
-            max-width: 1400px; /* 让表格更宽 */
-        }
-
-        .title {
-            font-weight: 800;
-        }
-
-        /* 表格容器，处理溢出滚动 */
+        /* 表格容器：去除阴影，改为简单的边框 */
         .table-container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            padding: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 0; /* 去除内边距，让表格贴边 */
             margin-bottom: 40px;
             overflow-x: auto;
         }
@@ -42,80 +33,76 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
+            font-size: 0.95rem; /* 稍微调大字体 */
         }
 
+        /* 表头样式：图3风格的浅灰色背景 */
         th {
-            background-color: #ffffff;
-            border-bottom: 2px solid #dbdbdb;
-            vertical-align: middle !important;
-            text-align: center !important;
-            padding: 12px 8px;
-            cursor: pointer; /* 鼠标悬停显示手型 */
-        }
-        
-        th:hover {
-            background-color: #f0f0f0;
-        }
-
-        td {
-            border-bottom: 1px solid #eee;
-            padding: 8px 5px;
+            background-color: #f8f9fa; /* 浅灰背景 */
+            color: #4b5563; /* 深灰文字 */
+            font-weight: 700;
+            border-bottom: 2px solid #e5e7eb;
+            padding: 15px 10px;
             text-align: center;
-            vertical-align: middle;
             white-space: nowrap;
         }
 
-        /* 第一列（模型名）左对齐 */
+        /* 单元格样式 */
+        td {
+            border-bottom: 1px solid #f3f4f6;
+            padding: 12px 10px;
+            text-align: center;
+            vertical-align: middle;
+            color: #374151;
+        }
+
+        /* 鼠标悬停在行上的效果：图3风格 */
+        tbody tr:hover {
+            background-color: #f9fafb;
+        }
+
+        /* 第一列（模型名）样式：模仿图3的蓝色链接风格 */
         td:first-child {
             text-align: left;
-            font-weight: 500;
-            color: #363636;
+            font-weight: 600;
+            color: #2563eb; /* 蓝色 */
         }
 
-        /* 分类标题行样式 */
+        /* 如果模型名原本不是链接，加上这个类可以让它看起来像 */
+        .model-name {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        /* 分类标题行：改为极简灰色 */
         .category-row td {
-            font-weight: 800;
-            text-align: center !important;
-            padding: 8px 0;
-            border-bottom: 1px solid #ddd;
+            background-color: #f3f4f6; /* 深一点的灰色区分 */
+            color: #1f2937;
+            font-weight: 700;
+            text-align: left !important; /* 靠左对齐更像标题 */
+            padding-left: 20px;
+            font-size: 0.9rem;
+            text-transform: uppercase; /* 大写看起来更专业 */
+            letter-spacing: 0.05em;
         }
 
-        /* 颜色定义 (复刻截图) */
-        .bg-pink { background-color: #ffeef2; color: #a02010; }
-        .bg-green { background-color: #e6f9ed; color: #0f5132; }
-        .bg-purple { background-color: #f2f2ff; color: #303f9f; }
-        .bg-yellow { background-color: #fffff0; color: #9a6e00; }
-
-        /* 高亮样式 */
-        .best {
-            font-weight: 800;
-            color: #000;
+        /* 高亮样式保留 */
+        .best { font-weight: 800; color: #000; }
+        .second { text-decoration: underline; color: #444; }
+        .cite { font-size: 0.7em; color: #9ca3af; vertical-align: super; }
+    /* --- 新增的 Badge 按钮样式 --- */
+    .badge-button {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 0 5px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            transition: opacity 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
-        .second {
-            text-decoration: underline;
-            color: #333;
-        }
-
-        /* 上标引用样式 */
-        .cite {
-            font-size: 0.7em;
-            color: #666;
-            vertical-align: super;
-        }
-/* --- 新增的 Badge 按钮样式 --- */
-.badge-button {
-        display: inline-flex;
-        align-items: center;
-        text-decoration: none;
-        border-radius: 4px;
-        margin: 0 5px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        font-size: 12px;
-        font-weight: bold;
-        transition: opacity 0.2s;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    }
     
     .badge-button:hover {
         opacity: 0.8;
@@ -250,11 +237,12 @@
                     </thead>
                     <tbody>
                         <!-- 1. Open-vocabulary Grounding Models (PINK) -->
-                        <tr class="category-row bg-pink">
+                        <tr class="category-row">
                             <td colspan="12">Open-vocabulary Grounding Models</td>
                         </tr>
                         <tr>
-                            <td>GLEE</td>
+                            <td><a href="https://github.com/FoundationVision/GLEE" target="_blank" class="model-name">GLEE</a> 
+                                </td>
                             <td>-</td>
                             <td>36.1</td>
                             <td>31.2</td>
@@ -283,7 +271,7 @@
                         </tr>
 
                         <!-- 2. Proprietary MLLMs (GREEN) -->
-                        <tr class="category-row bg-green">
+                        <tr class="category-row">
                             <td colspan="12">Proprietary MLLMs</td>
                         </tr>
                         <tr>
@@ -330,7 +318,7 @@
                         </tr>
 
                         <!-- 3. Specialist MLLMs (PURPLE) -->
-                        <tr class="category-row bg-purple">
+                        <tr class="category-row">
                             <td colspan="12">Specialist MLLMs</td>
                         </tr>
                         <tr>
@@ -433,7 +421,7 @@
                         </tr>
 
                         <!-- 4. Open-source General MLLMs (YELLOW) -->
-                        <tr class="category-row bg-yellow">
+                        <tr class="category-row">
                             <td colspan="12">Open-source General MLLMs</td>
                         </tr>
                         <tr>
@@ -447,7 +435,7 @@
                             <td>47.0</td>
                             <td>39.4</td>
                             <td>46.5</td>
-                            <td class="best">28.5</td>
+                            <td>28.5</td>
                             <td>43.0</td>
                         </tr>
                         <tr>
@@ -524,16 +512,16 @@
                         <tr>
                             <td>Qwen3-VL</td>
                             <td>8B</td>
-                            <td class="best">71.4</td>
-                            <td class="best">62.2</td>
-                            <td class="best">76.6</td>
-                            <td class="best">76.1</td>
-                            <td class="second">67.3</td>
-                            <td class="best">73.3</td>
-                            <td class="best">68.9</td>
-                            <td class="best">68.3</td>
+                            <td>71.4</td>
+                            <td>62.2</td>
+                            <td>76.6</td>
+                            <td>76.1</td>
+                            <td>67.3</td>
+                            <td>73.3</td>
+                            <td>68.9</td>
+                            <td>68.3</td>
                             <td>15.8</td>
-                            <td class="best">68.6</td>
+                            <td>68.6</td>
                         </tr>
                         <tr>
                             <td>Ovis2.5</td>
@@ -581,16 +569,16 @@
                         <tr>
                             <td>Qwen2.5-VL</td>
                             <td>72B</td>
-                            <td class="second">66.7</td>
-                            <td class="second">59.5</td>
-                            <td class="second">68.6</td>
-                            <td class="second">69.1</td>
-                            <td class="best">69.4</td>
-                            <td class="second">69.1</td>
-                            <td class="second">61.6</td>
-                            <td class="second">64.8</td>
-                            <td class="second">23.6</td>
-                            <td class="second">63.2</td>
+                            <td>66.7</td>
+                            <td>59.5</td>
+                            <td>68.6</td>
+                            <td>69.1</td>
+                            <td>69.4</td>
+                            <td>69.1</td>
+                            <td>61.6</td>
+                            <td>64.8</td>
+                            <td>23.6</td>
+                            <td>63.2</td>
                         </tr>
                         <tr>
                             <td>InternVL3</td>
@@ -624,9 +612,9 @@
         </h3>
         <div style="margin-bottom: 30px;">
             <ul>
-                <li>
+                <!-- <li>
                     🏆 <b>Bold</b> indicates the best result, and <span style="text-decoration: underline;">underline</span> indicates the second best.
-                </li>
+                </li> -->
                 <li>
                     📊 <b>Acc<sub>p</sub></b> denotes the accuracy for non-rejection tasks, while <b>Acc<sub>o</sub></b> represents the overall accuracy.
                 </li>
