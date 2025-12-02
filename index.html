@@ -90,62 +90,184 @@
         .best { font-weight: 800; color: #000; }
         .second { text-decoration: underline; color: #444; }
         .cite { font-size: 0.7em; color: #9ca3af; vertical-align: super; }
-    /* --- 新增的 Badge 按钮样式 --- */
-    .badge-button {
-            display: inline-flex;
-            align-items: center;
-            text-decoration: none;
-            border-radius: 4px;
-            margin: 0 5px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            font-size: 12px;
-            font-weight: bold;
-            transition: opacity 0.2s;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        /* --- 新增的 Badge 按钮样式 --- */
+        .badge-button {
+                display: inline-flex;
+                align-items: center;
+                text-decoration: none;
+                border-radius: 4px;
+                margin: 0 5px;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                font-size: 12px;
+                font-weight: bold;
+                transition: opacity 0.2s;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            }
+        
+        .badge-button:hover {
+            opacity: 0.8;
+            transform: translateY(-1px);
         }
-    
-    .badge-button:hover {
-        opacity: 0.8;
-        transform: translateY(-1px);
-    }
 
-    /* 左侧 Label 部分 */
-    .badge-label {
-        background-color: #555; /* 深灰色背景 */
-        color: #fff;
-        padding: 6px 10px;
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
-        text-transform: uppercase;
-    }
+        /* 左侧 Label 部分 */
+        .badge-label {
+            background-color: #555; /* 深灰色背景 */
+            color: #fff;
+            padding: 6px 10px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            text-transform: uppercase;
+        }
 
-    /* 右侧 Value 部分 (用于 Arxiv 这种双色结构，或者单色按钮) */
-    .badge-value {
-        padding: 6px 10px;
-        color: #fff;
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
-    }
+        /* 右侧 Value 部分 (用于 Arxiv 这种双色结构，或者单色按钮) */
+        .badge-value {
+            padding: 6px 10px;
+            color: #fff;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
 
-    /* 颜色定义 */
-    .bg-black { background-color: #000; }     /* Github 黑色 */
-    .bg-red { background-color: #B31B1B; }    /* Arxiv 红色 */
-    .bg-blue { background-color: #007EC6; }   /* Dataset 蓝色 */
-    
-    /* 标题区域微调 */
-    .logo-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 15px;
-    }
-    
-    .logo-img {
-        width: 50px; /* 根据你的 Logo 图片大小调整 */
-        height: 50px;
-        margin-right: 15px;
-        object-fit: contain;
-    }
+        /* 颜色定义 */
+        .bg-black { background-color: #000; }     /* Github 黑色 */
+        .bg-red { background-color: #B31B1B; }    /* Arxiv 红色 */
+        .bg-blue { background-color: #007EC6; }   /* Dataset 蓝色 */
+        
+        /* 标题区域微调 */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo-img {
+            width: 50px; /* 根据你的 Logo 图片大小调整 */
+            height: 50px;
+            margin-right: 15px;
+            object-fit: contain;
+        }
+        /* --- 新增内容模块样式 --- */
+        .content-section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            margin-bottom: 2rem !important;
+            font-weight: 700 !important;
+            color: #363636;
+        }
+
+        /* 图片通用样式：圆角+阴影 */
+        .result-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 说明文字 */
+        .caption {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+            margin-top: 10px;
+        }
+        /* --- 悬浮导航栏样式 --- */
+        html {
+            scroll-behavior: smooth; /* 让跳转平滑滚动 */
+        }
+
+        /* 固定在右下角的容器 */
+        .fixed-nav-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000; /* 保证在最上层 */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        /* 菜单主体 (默认隐藏) */
+        .nav-menu {
+            background: white;
+            border-radius: 10px; /* 圆角稍微改小 */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            padding: 5px 0;      /* 上下留白从 10px 减为 5px */
+            margin-bottom: 12px;
+            min-width: 160px;    /* 宽度从 220px 减为 160px，大幅变瘦 */
+            display: none; 
+            transform-origin: bottom right;
+            animation: popUp 0.2s ease-out;
+        }
+
+        /* 菜单显示时的动画 */
+        @keyframes popUp {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* 菜单项 */
+        .nav-menu a {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;   /* 内边距减小，让每一行更矮 */
+            color: #4a4a4a;
+            text-decoration: none;
+            font-size: 0.85rem;  /* 字体调小一号 */
+            transition: background 0.2s;
+        }
+
+        .nav-menu a:hover {
+            background-color: #f5f5f5;
+            color: #2c3e50;
+        }
+
+        /* 菜单图标 */
+        .nav-menu i {
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+            color: #ff6b6b; /* 图标颜色，模仿截图中的多彩风格 */
+        }
+        
+        /* 针对不同图标给点不同的颜色 (可选) */
+        .nav-menu a:nth-child(1) i { color: #ff6b6b; } /* 红 */
+        .nav-menu a:nth-child(2) i { color: #feca57; } /* 黄 */
+        .nav-menu a:nth-child(3) i { color: #48dbfb; } /* 蓝 */
+        .nav-menu a:nth-child(4) i { color: #ff9ff3; } /* 粉 */
+        .nav-menu a:nth-child(5) i { color: #1dd1a1; } /* 绿 */
+
+        /* 悬浮按钮 (Sections) */
+        .nav-button {
+            background-color: #d1f2eb;
+            color: #2c3e50;
+            border: none;
+            padding: 8px 15px;  
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.9rem;   
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            background-color: #bff4e8;
+        }
+
+        .nav-button i {
+            margin-right: 8px;
+            color: #e67e22; 
+        }
     </style>
 </head>
 <body>
@@ -159,9 +281,7 @@
             <!-- 1. 标题与图标行 -->
             <div class="logo-container">
                 <!-- 
-                注意：这里暂时用了一个机器人图标代替你的 Logo。
-                如果你有图片文件(比如 logo.png)，请把下面这行 <span>...</span> 删掉，
-                换成：<img src="logo.png" class="logo-img" alt="Logo"> 
+                <img src="logo.png" class="logo-img" alt="Logo"> 
                 -->
                 <span class="icon is-large" style="font-size: 3rem; margin-right: 15px; color: #2c3e50;">
                     <i class="fas fa-robot"></i> 
@@ -172,6 +292,11 @@
                 </h1>
             </div>
 
+            
+
+            <p class="subtitle is-5 has-text-grey-dark">
+                A Perceptual and Reasoning Oriented Benchmark for Referring Expression Comprehension.
+            </p>
             <!-- 2. Badge 风格按钮行 -->
             <div style="margin-bottom: 20px;">
                 <!-- Github 按钮 (黑色) -->
@@ -181,7 +306,7 @@
                     </span>
                 </a>
 
-                <!-- Arxiv 按钮 (模仿截图: 左灰右红) -->
+                <!-- Arxiv 按钮 -->
                 <a href="https://arxiv.org/xxx" target="_blank" class="badge-button">
                     <span class="badge-label">ARXIV</span>
                     <span class="badge-value bg-red">PAPER</span>
@@ -194,19 +319,52 @@
                     </span>
                 </a> -->
             </div>
-
-            <!-- 3. 副标题说明文字 -->
-            <p class="subtitle is-5 has-text-grey-dark">
-                A Holistic Benchmark for Visual-cue Perception and Compositional Reasoning in Referring Expression Comprehension.
-            </p>
-
+        </div>
+        </div>
+    </section>
+    <!-- ==================== 1. Introduction 介绍模块 ==================== -->
+    <section class="section content-section" id="introduction">
+        <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered section-title">Introduction</h2>
+        <div class="content has-text-justified is-size-5">
+            <p>
+                Referring Expression Comprehension (REC) is a vision-language task that localizes a specific image region based on a textual description. 
+                Existing REC benchmarks primarily evaluate perceptual capabilities and lack interpretable scoring mechanisms, 
+                which cannot reveal the grounding capability of <strong>Multi-modal Large Language Models (MLLMs)</strong> across different cognitive abilities.
+              </p>
+              <p>
+                To address this limitation, we introduce <strong>RefBench-PRO</strong>, a comprehensive REC benchmark. 
+                It decomposes referring expressions into two core dimensions: <strong>Visual-cue Perception</strong> and <strong>Compositional Reasoning</strong>, 
+                and further subdivides them into <strong>six progressively challenging tasks</strong>: 
+                <em>Attribute, Position, Interaction, Commonsense, Relation, and Reject</em>.
+              </p>
+              
         </div>
         </div>
     </section>
 
+    <!-- ==================== 2. Data Examples 数据示例模块 ==================== -->
+    <section class="section content-section" id="data-examples" style="background-color: #f9fafb;">
+        <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered section-title">Data Examples</h2>
+        
+        <div class="columns is-centered">
+            <div class="column is-full">
+            
+            <img src="assets/images/data_example.png" alt="RefBench-PRO Data Examples" class="result-image">
+            <p class="caption">
+                Figure 1: Visualizations of the six tasks in the RefBench-PRO.
+            </p>
+            </div>
+        </div>
+        </div>
+    </section>
+
+  
     <!-- 表格区域 -->
-    <section class="section">
+    <section class="section" id="leaderboard">
         <div class="container">
+            <h2 class="title is-3 has-text-centered section-title">Leaderboard</h2>
             <div class="table-container">
                 <table class="table is-hoverable is-fullwidth" id="leaderboardTable">
                     <thead>
@@ -602,7 +760,8 @@
             </p> -->
         </div>
     </section>
-    <!-- 页脚信息区域 (Notes, Tasks, Citation) -->
+
+    <!-- 页脚信息区域 (Notes, Tasks) -->
     <section class="section">
         <div class="container is-max-desktop content">
         
@@ -653,6 +812,53 @@
                 </div>
             </details>
         </div>
+
+        </div>
+    </section>
+
+    <!-- ==================== 3. Benchmark Statistics 数据统计模块 ==================== -->
+    <section class="section content-section" id="statistics">
+        <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered section-title">Benchmark Statistics</h2>
+        
+        <!-- 左右两栏布局：左边放饼图，右边放柱状图 -->
+        <div class="columns is-vcentered">
+            
+            <!-- 左侧：统计图1 -->
+            <div class="column is-6 has-text-centered">
+            <img src="assets/images/data_statiscs.png" alt="Task Distribution" class="result-image">
+            <p class="caption">Distribution of Task Categories</p>
+            </div>
+            
+            <!-- 右侧：统计图2 -->
+            <div class="column is-6 has-text-centered">
+            <img src="assets/images/benchmark_compare.png" alt="Object Area Ratio" class="result-image">
+            <p class="caption">Object Area Ratio & Density Analysis</p>
+            </div>
+            
+        </div>
+        </div>
+    </section>
+
+    <!-- ==================给== 4. Detailed Results 实验结果模块 ==================== -->
+    <section class="section content-section" id="detailed-results" style="background-color: #f9fafb;">
+        <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered section-title">Experiment Results</h2>
+        
+        <div class="columns is-centered">
+            <div class="column is-10">
+            <img src="assets/images/result_compare.png" alt="Detailed Results" class="result-image">
+            <p class="caption">
+                Performance comparison across different difficulty levels and visual distractors.
+            </p>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- 页脚信息区域 (Citation) -->
+    <section class="section" id="citation">
+        <div class="container is-max-desktop content">
 
         <!-- 3. Citation 部分 -->
         <h3 class="title is-4 has-text-centered">
@@ -732,6 +938,65 @@
                 }
             }
         }
+    </script>
+    <!-- 悬浮导航模块 -->
+  <div class="fixed-nav-container">
+    
+    <!-- 弹出的菜单列表 -->
+    <div class="nav-menu" id="navMenu">
+        <a href="#introduction">
+            <i class="fas fa-file-alt"></i> Introduction
+        </a>
+        <a href="#data-examples">
+            <i class="fas fa-images"></i> Data Examples
+        </a>
+        <a href="#leaderboard">
+            <i class="fas fa-trophy"></i> Leaderboard
+        </a>
+        <a href="#statistics">
+            <i class="fas fa-chart-pie"></i> Benchmark Statistics
+        </a>
+        <a href="#detailed-results">
+            <i class="fas fa-poll"></i> Experiment Results
+        </a>
+        
+        <a href="#citation">
+            <i class="fas fa-quote-right"></i> Citation
+        </a>
+    </div>
+
+    <!-- 悬浮按钮 -->
+    <button class="nav-button" onclick="toggleNav()">
+        <i class="fas fa-scroll"></i> Sections
+    </button>
+    </div>
+
+    <!-- JavaScript 控制脚本 -->
+    <script>
+    function toggleNav() {
+        var menu = document.getElementById("navMenu");
+        if (menu.style.display === "block") {
+            menu.style.display = "none";
+        } else {
+            menu.style.display = "block";
+        }
+    }
+
+    // 点击页面其他地方关闭菜单
+    document.addEventListener('click', function(event) {
+        var container = document.querySelector('.fixed-nav-container');
+        var menu = document.getElementById("navMenu");
+        if (!container.contains(event.target) && menu.style.display === "block") {
+            menu.style.display = "none";
+        }
+    });
+
+    // 点击链接后自动收起菜单
+    document.querySelectorAll('.nav-menu a').forEach(item => {
+        item.addEventListener('click', () => {
+            document.getElementById("navMenu").style.display = "none";
+        });
+    });
     </script>
 </body>
 </html>
